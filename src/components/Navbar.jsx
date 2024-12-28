@@ -3,7 +3,7 @@ import logo from '../assets/logo 2.png'
 const Navbar = () => {
   const list = (
     <>
-    <div className="flex text-xl font-bold">
+    <div className="flex text-lg font-bold">
             <li className="p-2">
         <Link to="/">Home</Link>
       </li>
@@ -60,7 +60,7 @@ const Navbar = () => {
         <img src={logo} alt="" className='' />
         </div>
         <div className="">
-        <Link to='/' className="btn btn-ghost text-2xl">Car Rental</Link>
+        <Link to='/' className="btn btn-ghost text-xl">Car Rental</Link>
         </div>
         </div>
       </div>

@@ -1,0 +1,67 @@
+[
+    {
+      "image": "https://i.ibb.co/sQXPpvJ/car-1.jpg",
+      "model": "Toyota Camry 2023",
+      "daily_price": "$45/day",
+      "availability": "Available",
+      "booking_count": 12,
+      "date_posted": "Added 2 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/3mq460s/car-2.jpg",
+      "model": "Honda Civic 2022",
+      "daily_price": "$40/day",
+      "availability": "Not Available",
+      "booking_count": 8,
+      "date_posted": "Added 5 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/W6Q4Sky/car-3.jpg",
+      "model": "Ford Mustang 2023",
+      "daily_price": "$75/day",
+      "availability": "Available",
+      "booking_count": 20,
+      "date_posted": "Added 1 day ago"
+    },
+    {
+      "image": "https://i.ibb.co/C7ZbNBz/car-4.jpg",
+      "model": "Chevrolet Malibu 2022",
+      "daily_price": "$50/day",
+      "availability": "Available",
+      "booking_count": 10,
+      "date_posted": "Added 3 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/QryF7Kc/car-5.jpg",
+      "model": "Nissan Altima 2023",
+      "daily_price": "$48/day",
+      "availability": "Not Available",
+      "booking_count": 15,
+      "date_posted": "Added 4 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/C7DXKmr/car-6.jpg",
+      "model": "BMW 3 Series 2023",
+      "daily_price": "$90/day",
+      "availability": "Available",
+      "booking_count": 5,
+      "date_posted": "Added 2 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/RbXqX5f/car-7.jpg",
+      "model": "Audi A4 2022",
+      "daily_price": "$85/day",
+      "availability": "Not Available",
+      "booking_count": 7,
+      "date_posted": "Added 6 days ago"
+    },
+    {
+      "image": "https://i.ibb.co/kg43nC9/car-8.jpg",
+      "model": "Mercedes-Benz C-Class 2023",
+      "daily_price": "$100/day",
+      "availability": "Available",
+      "booking_count": 3,
+      "date_posted": "Added 1 day ago"
+    }
+  ]
+  

@@ -1,0 +1,62 @@
+[
+  {
+    "rating": 5,
+    "comment": "Fantastic service! The car was in excellent condition and the staff was very helpful.",
+    "photo_url": "https://i.ibb.co.com/RDBqGPJ/suresh.jpg",
+    "name": "Suresh Raina"
+  },
+  {
+    "rating": 4,
+    "comment": "Good experience overall, but the pick-up process was a bit slow.",
+    "photo_url": "https://i.ibb.co.com/vHBzhDF/rohit-sharma.png",
+    "name": "Rohit Sharma"
+  },
+  {
+    "rating": 5,
+    "comment": "Amazing selection of cars at great prices! Will definitely rent again.",
+    "photo_url": "https://i.ibb.co.com/2ZF4mYL/kumar-sanga.jpg",
+    "name": "Kumar Sangakara"
+  },
+  {
+    "rating": 3,
+    "comment": "Car was fine, but the customer service could be improved.",
+    "photo_url": "https://i.ibb.co.com/t4dnCsV/david-warner.png",
+    "name": "David Warner"
+  },
+  {
+    "rating": 4,
+    "comment": "Great experience! The car was clean and the booking process was easy.",
+    "photo_url": "https://i.ibb.co.com/2WmLh6k/TAMIM.jpg",
+    "name": "Tamim Iqbal"
+  },
+  {
+    "rating": 5,
+    "comment": "Superb service! The car was ready on time and in perfect condition.",
+    "photo_url": "https://i.ibb.co.com/x8vP3L6/musfiq.jpg",
+    "name": "Musfiqur Rahim"
+  },
+  {
+    "rating": 4,
+    "comment": "Very good experience, but the return process could be quicker.",
+    "photo_url": "https://i.ibb.co.com/P1qQLg7/shakib.jpg",
+    "name": "Shakib Al Hasan"
+  },
+  {
+    "rating": 5,
+    "comment": "Best car rental experience I've ever had! Highly recommend.",
+    "photo_url": "https://i.ibb.co.com/7v6MQMW/chris-gayle-quiz.png",
+    "name": "Chris Gayle"
+  },
+  {
+    "rating": 3,
+    "comment": "Decent service, but the car had a few minor issues.",
+    "photo_url": "https://i.ibb.co.com/YZ8qqsM/Hasim-amla.png",
+    "name": "Hasim Amla"
+  },
+  {
+    "rating": 4,
+    "comment": "Overall, a good experience. The car was clean and the staff was friendly.",
+    "photo_url": "https://i.ibb.co.com/2ZF4mYL/kumar-sanga.jpg",
+    "name": "Kumar Sangakara"
+  }
+]
