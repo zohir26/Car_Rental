@@ -1,54 +1,79 @@
 import { Link } from "react-router-dom";
-
-
+import logo from '../assets/logo 2.png'
 const Navbar = () => {
-    const list= <>
-        <div className="flex gap-5 font-semibold justify-center items-center bg-red-200 p-3 ">
-        <Link> <li>Home</li> </Link>
-        <Link> <li>Available Cars </li> </Link>
-        <Link> <li>Add Car</li> </Link>
-        <Link> <li>My Cars</li> </Link>
-        <Link> <li>My Bookings</li> </Link>
-        <Link> <li>Logout</li> </Link>
-        <Link> <li>Logout</li> </Link>
-        </div>
-    </>
-    return (
-        <div className="navbar bg-base-100">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h8m-8 6h16" />
-        </svg>
-      </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            {list}
-      </ul>
+  const list = (
+    <>
+    <div className="flex text-xl font-bold">
+            <li className="p-2">
+        <Link to="/">Home</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/available-cars">Available Cars</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/add-car">Add Car</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/my-cars">My Cars</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/my-bookings">My Bookings</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/updateUser">Update User</Link>
+      </li>
+      <li className="p-2">
+        <Link to="/logout">Logout</Link>
+      </li>
     </div>
-    <a className="btn btn-ghost text-xl bg-red-200">Car Rental</a>
-  </div>
-  <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1">
-      {list}
-    </ul>
-  </div>
-  <div className="navbar-end">
-    <a className="btn   btn-primary text-white">Sign In</a>
-  </div>
-</div>
-    );
+    </>
+  );
+
+  return (
+    <div className="navbar bg-[#2C3E50] text-white">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black z-50">
+            {list}
+          </ul>
+        </div>
+        {/* logo with brand */}
+        <div className="flex gap-3 justify-center items-center ">
+        <div className="">
+        <img src={logo} alt="" className='' />
+        </div>
+        <div className="">
+        <Link to='/' className="btn btn-ghost text-2xl">Car Rental</Link>
+        </div>
+        </div>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          {list}
+        </ul>
+      </div>
+      <div className="navbar-end">
+        <Link to='/login' className="btn btn-primary text-white">Sign In</Link>
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;
