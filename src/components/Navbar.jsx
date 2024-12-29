@@ -17,7 +17,10 @@ const Navbar = () => {
       {user && user.email ? (
         <>
           <li className="p-2">
-            <Link to="/add-car">Add Car</Link>
+            <Link to="/addCar">Add Car</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/availableCar">Available Car</Link>
           </li>
           <li className="p-2">
             <Link to="/my-cars">My Cars</Link>

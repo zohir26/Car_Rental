@@ -1,0 +1,98 @@
+[
+    {
+      "model": "Toyota Camry",
+      "price": 50,
+      "availability": "Available",
+      "registrationNumber": "ABC1234",
+      "features": "GPS, AC, Bluetooth, Cruise Control",
+      "description": "A comfortable and reliable sedan with advanced features and excellent fuel efficiency.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/3mq460s/car-2.jpg",
+      "location": "New York, NY"
+    },
+    {
+      "model": "Honda Civic",
+      "price": 45,
+      "availability": "Available",
+      "registrationNumber": "XYZ5678",
+      "features": "GPS, AC, Bluetooth",
+      "description": "A compact car with modern amenities and great fuel economy.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/RbXqX5f/car-7.jpg",
+      "location": "Los Angeles, CA"
+    },
+    {
+      "model": "Ford Mustang",
+      "price": 75,
+      "availability": "Available",
+      "registrationNumber": "MUS1234",
+      "features": "GPS, AC, Bluetooth, Sport Mode",
+      "description": "A powerful and stylish sports car with advanced features and a thrilling driving experience.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/C7ZbNBz/car-4.jpg",
+      "location": "Miami, FL"
+    },
+    {
+      "model": "Chevrolet Malibu",
+      "price": 55,
+      "availability": "Not Available",
+      "registrationNumber": "CHEV4567",
+      "features": "GPS, AC, Bluetooth, Heated Seats",
+      "description": "A midsize sedan with comfortable seating and a smooth ride.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/C7DXKmr/car-6.jpg",
+      "location": "Chicago, IL"
+    },
+    {
+      "model": "Nissan Altima",
+      "price": 60,
+      "availability": "Available",
+      "registrationNumber": "NISS7890",
+      "features": "GPS, AC, Bluetooth, Remote Start",
+      "description": "A versatile sedan with advanced safety features and great performance.",
+      "bookingCount": 0,
+      "imageUrl": "https://i.ibb.co/RbXqX5f/car-7.jpg",
+      "location": "Houston, TX"
+    },
+    {
+      "model": "BMW 3 Series",
+      "price": 90,
+      "availability": "Available",
+      "registrationNumber": "BMW1234",
+      "features": "GPS, AC, Bluetooth, Sunroof",
+      "description": "A luxury sedan with premium features and an exhilarating driving experience.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/kg43nC9/car-8.jpg",
+      "location": "San Francisco, CA"
+    },
+    {
+      "model": "Audi A4",
+      "price": 85,
+      "availability": "Available",
+      "registrationNumber": "AUDI5678",
+      "features": "GPS, AC, Bluetooth, Leather Seats",
+      "description": "A sophisticated and high-performance sedan with elegant design.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/sQXPpvJ/car-1.jpg",
+      "location": "Seattle, WA"
+    },
+    {
+      "model": "Mercedes-Benz C-Class",
+      "price": 100,
+      "availability": "Available",
+      "registrationNumber": "MBZ1234",
+      "features": "GPS, AC, Bluetooth, Luxury Package",
+      "description": "A premium sedan with luxurious features and top-notch performance.",
+      "bookingCount": 0,
+      "imageUrl": "  https://i.ibb.co/W6Q4Sky/car-3.jpg",
+      "location": "Atlanta, GA"
+    }
+  ]
+
+
+  
+
+  
+
+
+// https://i.ibb.co/QryF7Kc/car-5.jpg
