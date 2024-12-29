@@ -1,0 +1,28 @@
+[
+    {
+      "offer_duration": "7 days",
+      "discount_percentage": 10,
+      "discount_title": "Weekly Saver",
+      "photo_url":"https://i.ibb.co.com/DD1JK9h/dc-3.jpg"
+      
+    },
+    {
+      "offer_duration": "14 days",
+      "discount_percentage": 15,
+      "discount_title": "Fortnightly Bonanza",
+      "photo_url":" https://i.ibb.co.com/RDkRwMT/dc-2.jpg"
+    },
+    {
+      "offer_duration": "30 days",
+      "discount_percentage": 20,
+      "discount_title": "Monthly Special",
+      "photo_url":"https://i.ibb.co.com/n10tzwN/dc-1.jpg"
+    },
+    {
+      "offer_duration": "Weekend",
+      "discount_percentage": 5,
+      "discount_title": "Weekend Getaway",
+      "photo_url":"  https://i.ibb.co.com/sQXPpvJ/car-1.jpg"
+    }
+  ]
+  
