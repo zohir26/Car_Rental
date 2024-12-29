@@ -4,6 +4,8 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { auth, AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { IoLogoGoogle } from 'react-icons/io';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const Register = () => {
  const {createNewUser}=useContext(AuthContext);
@@ -41,7 +43,17 @@ const Register = () => {
             console.log(errorCode, errorMessage)
           });
     }
-   
+    const handleGoogleSignIn=()=>{
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+        .then(result=>{
+          const user= result.user;
+          navigate('/')
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+    }
     return (
         <>
             <Navbar></Navbar>
@@ -60,7 +72,7 @@ const Register = () => {
                                 </div>
                                 <button className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Register</button>
                                 <div className="mt-4 flex justify-between items-center">
-                                    <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Sign up with Google</button>
+                <button onClick={handleGoogleSignIn} className="px-4 py-2 bg-red-500 text-white flex gap-2 justify-center items-center rounded-md hover:bg-red-600"> <IoLogoGoogle />Login with Google</button>
                                     <Link to="/login" className="text-blue-600 hover:underline">Already have an account? Login</Link>
                                 </div>
                             </form>

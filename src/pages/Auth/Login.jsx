@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { AuthContext } from '../../Provider/AuthProvider';
+import { auth, AuthContext } from '../../Provider/AuthProvider';
+import { IoLogoGoogle } from "react-icons/io";
 import Swal from 'sweetalert2';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const Login = () => {
  const navigate= useNavigate();
@@ -38,6 +40,18 @@ const Login = () => {
           console.log(errorCode, errorMessage)
         });
   }
+
+  const handleGoogleSignIn=()=>{
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+      .then(result=>{
+        const user= result.user;
+        navigate('/')
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+  }
   return (
     <>
     <Navbar></Navbar>
@@ -56,8 +70,8 @@ const Login = () => {
                 <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='password'/>
               </div>
               <button className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
-              <div className="mt-4 flex justify-between items-center">
-                <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Login with Google</button>
+              <div className="mt-4 flex justify-between items-center gap-2">
+                <button onClick={handleGoogleSignIn} className="px-4 py-2 bg-red-500 text-white flex gap-2 justify-center items-center rounded-md hover:bg-red-600"> <IoLogoGoogle />Login with Google</button>
                 <Link to="/register" className="text-blue-600 hover:underline">Create an account</Link>
               </div>
             </form>
