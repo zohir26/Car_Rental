@@ -1,9 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+ const navigate= useNavigate();
+  const {signInUser}= useContext(AuthContext)
+  const handleSignIn=(event)=>{
+    event.preventDefault();
+        const form= event.target;
+        const email= form.email.value;
+        const password= form.password.value;
+        const existingUser= {email,password}
+        console.log(existingUser)
+
+        signInUser(email,password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user)
+          if(user.uid){
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Logged in Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/')
+        }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage)
+        });
+  }
   return (
     <>
     <Navbar></Navbar>
@@ -14,12 +48,12 @@ const Login = () => {
           <div className="max-w-md mx-auto">
             <div className="text-center text-2xl font-semibold">Login</div>
             
-            <form className="mt-8">
+            <form className="mt-8" onSubmit={handleSignIn}>
               <div className="mb-4">
-                <input type="email" placeholder="Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <input type="email" placeholder="Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='email'/>
               </div>
               <div className="mb-4">
-                <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='password'/>
               </div>
               <button className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
               <div className="mt-4 flex justify-between items-center">

@@ -1,32 +1,69 @@
 import { Link } from "react-router-dom";
-import logo from '../assets/logo 2.png'
+import logo from '../assets/logo 2.png';
+import { useContext } from "react";
+import { auth, AuthContext } from "../Provider/AuthProvider";
+
 const Navbar = () => {
+  const { user, signOutUser } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser(auth)
+      .then(() => { })
+      .catch((error) => { console.log(error) });
+  };
+
   const list = (
-    <>
-    <div className="flex  font-bold">
-            <li className="p-2">
-        <Link to="/">Home</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/available-cars">Available Cars</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/add-car">Add Car</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/my-cars">My Cars</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/my-bookings">My Bookings</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/updateUser">Update User</Link>
-      </li>
-      <li className="p-2">
-        <Link to="/logout">Logout</Link>
-      </li>
-    </div>
-    </>
+    <ul className="lg:flex font-bold ">
+      {user && user.email ? (
+        <>
+          <li className="p-2">
+            <Link to="/add-car">Add Car</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/my-cars">My Cars</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/my-bookings">My Bookings</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/updateUser">Update User</Link>
+          </li>
+          <li className="p-2 text-green-500 flex items-center justify-center">
+            {user.email}
+          </li>
+          <li className="flex justify-center items-center space-x-2 ">
+
+            {user.photoURL && (
+              <>
+
+                <div className="flex justify-center items-center space-x-2">
+                  <p className="text-white"> {user.displayName} </p>
+
+                  <img
+                    key={user.photoURL}
+                    src={user.photoURL}
+                    alt={user.displayName || "User Photo"}
+
+                    className="w-8 h-8 rounded-full  bg-white "
+
+                  />
+                </div>
+              </>
+            )}
+
+          </li>
+        </>
+      ) : (
+        <>
+          <li className="p-2">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/available-cars">Available Cars</Link>
+          </li>
+        </>
+      )}
+    </ul>
   );
 
   return (
@@ -39,7 +76,8 @@ const Navbar = () => {
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -50,18 +88,19 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black z-50">
+            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 text-black z-50"
+          >
             {list}
           </ul>
         </div>
-        {/* logo with brand */}
-        <div className="flex gap-3 justify-center items-center ">
-        <div className="">
-        <img src={logo} alt="" className='' />
-        </div>
-        <div className="">
-        <Link to='/' className="btn btn-ghost text-xl font-bold">Car Rental</Link>
-        </div>
+        {/* Logo with brand */}
+        <div className="flex gap-3 justify-center items-center">
+          <div>
+            <img src={logo} alt="Car Rental Logo" className="h-10 w-auto" />
+          </div>
+          <div>
+            <Link to='/' className="btn btn-ghost text-xl font-bold">Car Rental</Link>
+          </div>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -70,8 +109,13 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to='/login' className="btn btn-primary text-white">Sign In</Link>
+        {user && user.email ? (
+          <Link onClick={handleSignOut} className="btn btn-primary text-white">Sign Out</Link>
+        ) : (
+          <Link to='/login' className="btn btn-primary text-white">Sign In</Link>
+        )}
       </div>
+
     </div>
   );
 };

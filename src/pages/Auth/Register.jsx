@@ -1,9 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { auth, AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+ const {createNewUser}=useContext(AuthContext);
+ const navigate= useNavigate()
+    const handleSignUp= (event)=>{
+      
+        event.preventDefault();
+        const form= event.target;
+        const email= form.email.value;
+        const password= form.password.value;
+        const newUser= {email,password}
+        console.log(newUser)
+
+        // create new user
+        createNewUser( email,password)
+        .then((userCredential) => {
+            
+            const user = userCredential.user;
+            console.log(user)
+            if(user.uid){
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Registered Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  navigate('/')
+            }
+            
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+          });
+    }
+   
     return (
         <>
             <Navbar></Navbar>
@@ -13,12 +51,12 @@ const Register = () => {
                     <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
                         <div className="max-w-md mx-auto">
                             <div className="text-center text-2xl font-semibold">Register</div>
-                            <form className="mt-8">
+                            <form className="mt-8" onSubmit={handleSignUp}>
                                 <div className="mb-4">
-                                    <input type="email" placeholder="Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                                    <input type="email" placeholder="Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='email'/>
                                 </div>
                                 <div className="mb-4">
-                                    <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                                    <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='password'/>
                                 </div>
                                 <button className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Register</button>
                                 <div className="mt-4 flex justify-between items-center">

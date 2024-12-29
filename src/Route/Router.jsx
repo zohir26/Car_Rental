@@ -1,34 +1,58 @@
 import {
-    createBrowserRouter,
-  
-  } from "react-router-dom";
+  createBrowserRouter,
+
+} from "react-router-dom";
 import HomeLayout from "../Layout/HomeLayout";
 import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import UpdateUser from "../pages/Auth/UpdateUser";
+import PrivateRoute from "./PrivateRoute";
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <HomeLayout></HomeLayout>,
-    },
-    {
-      path:'/login',
-      element:<Login></Login>
-    },
-    {
-      path:'/register',
-      element:<Register></Register>
-    },
-    {
-      path:'/updateUser',
-      element:<UpdateUser></UpdateUser>
-    },
-    {
-      path:"*",
-      element:<ErrorPage></ErrorPage>
-    }
-  ]);
-  
-  export default router;
+import MyBookings from "../pages/car/MyBookings";
+import MyCars from "../pages/car/Mycars";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout></HomeLayout>,
+  },
+  {
+    path: '/login',
+    element: <Login></Login>
+  },
+  {
+    path: '/register',
+    element: <Register></Register>
+  },
+  {
+    path: '/updateUser',
+    element: <PrivateRoute>
+      <UpdateUser></UpdateUser>
+    </PrivateRoute>
+  },
+  {
+    path: '/addCar',
+    element: <PrivateRoute>
+      <UpdateUser></UpdateUser>
+    </PrivateRoute>
+  },
+  {
+    path: '/myCars',
+    element: <PrivateRoute>
+      <MyCars></MyCars>
+    </PrivateRoute>
+  },
+  {
+    path: '/myBookings',
+    element: <PrivateRoute>
+      <MyBookings></MyBookings>
+    </PrivateRoute>
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>
+  }
+]);
+
+export default router;
