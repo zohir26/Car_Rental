@@ -13,6 +13,7 @@ import MyBookings from "../pages/car/MyBookings";
 import MyCars from "../pages/car/Mycars";
 import AddCar from "../pages/car/AddCar";
 import AvailableCars from "../pages/car/AvailableCars";
+import ViewDetails from "../pages/car/ViewDetails";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,12 @@ const router = createBrowserRouter([
     path: '/availableCar',
     element: <PrivateRoute>
        <AvailableCars></AvailableCars>
+    </PrivateRoute>
+  },
+  {
+    path: `/viewDetails/:id`,
+    element: <PrivateRoute>
+      <ViewDetails></ViewDetails>
     </PrivateRoute>
   },
   {

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { Link } from 'react-router-dom';
 
 const AvailableCars = () => {
     const [data, setData] = useState([]);
@@ -31,9 +32,11 @@ const AvailableCars = () => {
                 <p className="text-gray-600 mb-2">Daily Rental Price: ${car.price}</p>
                 <p className="text-gray-600 mb-2">Availability: {car.availability}</p>
                 <p className="text-gray-600 mb-2">Location: {car.location}</p>
+                <Link to={`/viewDetails/${car._id}`}>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
                   View Details
                 </button>
+                </Link>
               </div>
             </div>
           ))}

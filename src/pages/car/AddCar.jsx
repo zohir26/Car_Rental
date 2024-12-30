@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../Provider/AuthProvider';
+import { useReducedMotion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 
 const AddCar = () => {
-  const [carData, setCarData] = useState({
+  const navigate= useNavigate()
+    const {user}= useContext(AuthContext)
+    const [carData, setCarData] = useState({
     model: '',
     price: '',
     availability: '',
@@ -26,9 +31,13 @@ const AddCar = () => {
     event.preventDefault();
     console.log(carData);
     // Save user details, date, and default booking status into the database.
-
+    // Include user to car data
+    const userCarData = {...carData,
+         userEmail: user.email,
+         dateAdded:new Date().toISOString() //add current time
+        };
     // send data to database
-    axios.post('http://localhost:4000/addCar',carData)
+    axios.post('http://localhost:4000/addCar',userCarData)
     .then(res=>{
        console.log(res.data)
        if(res.data.insertedId){
@@ -39,6 +48,8 @@ const AddCar = () => {
             confirmButtonText: 'OK'
           });
        }
+
+       navigate('/myCars')
     })
     .catch(error=>{
         console.log(error)
