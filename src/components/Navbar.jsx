@@ -19,9 +19,7 @@ const Navbar = () => {
           <li className="p-2">
             <Link to="/addCar">Add Car</Link>
           </li>
-          <li className="p-2">
-            <Link to="/availableCar">Available Car</Link>
-          </li>
+
           <li className="p-2">
             <Link to="/myCars">My Cars</Link>
           </li>
@@ -62,7 +60,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="p-2">
-            <Link to="/available-cars">Available Cars</Link>
+            <Link to="/availableCar">Available Car</Link>
           </li>
         </>
       )}
