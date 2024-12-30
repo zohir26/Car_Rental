@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import Swal from 'sweetalert2';
 const MyCars = () => {
   const [selfCars, setSelfCars] = useState([]);
   const { user } = useContext(AuthContext);
@@ -26,6 +27,43 @@ const MyCars = () => {
       });
   }, [user.email]);
 
+   const handleDelete = (_id)=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            axios.delete(`http://localhost:4000/cars/${_id}`)
+            .then(res=>{
+                if(res.deletedCount>0){
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                      });
+                }
+            })
+
+                //deleted from ui
+                setSelfCars(selfCars.filter(cars=>cars._id !== _id))
+
+        }
+        else{
+            Swal.fire({
+                title: "Error!",
+                text: "Review not found or already deleted.",
+                icon: "error"
+            });
+        }
+      });
+
+   }
   return (
         <>
         <Navbar></Navbar>
@@ -63,13 +101,19 @@ const MyCars = () => {
                     <FaEye />
                     </button>
                     </Link>
-                    <Link>
+
+
+                    <Link to={`/updateCarInfo/${car._id}`}>
                     <button className="bg-green-600 text-white px-4 py-2 ml-2 rounded-md hover:bg-green-700 transition duration-300 ">
                     <CiEdit />
                     </button>
                     </Link>
+
+
                     <Link>
-                    <button className="bg-red-600 text-white px-4 py-2 ml-2 rounded-md hover:bg-red-700 transition duration-300 ">
+                    <button 
+                    onClick={()=>{handleDelete(car._id)}}
+                    className="bg-red-600 text-white px-4 py-2 ml-2 rounded-md hover:bg-red-700 transition duration-300 ">
                     <FaTrashRestore />
                     </button>
                     </Link>
