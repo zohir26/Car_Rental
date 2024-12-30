@@ -76,57 +76,73 @@ const MyCars = () => {
           {/* Title and Sort Buttons Aligned */}
           <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
             <h1 className="text-3xl font-extrabold text-gray-900">My Cars</h1>
-            <div className="flex gap-2">
+            {
+              selfCars.length ===0 ? "" : (
+                <div className="flex gap-2">
               <button className="btn btn-primary" onClick={handleSortByPrice}>Sort by Price</button>
               <button className="btn btn-warning" onClick={handleSortByDate}>Sort by Date</button>
             </div>
+              )
+            }
           </div>
 
-          {/* Cars Table */}
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-              <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <tr>
-                  <th className="py-3 px-6 text-center">Car Image</th>
-                  <th className="py-3 px-6 text-center">Car Model</th>
-                  <th className="py-3 px-6 text-center">Daily Rental Price</th>
-                  <th className="py-3 px-6 text-center">Booking Count</th>
-                  <th className="py-3 px-6 text-center">Availability</th>
-                  <th className="py-3 px-6 text-center">Date Added</th>
-                  <th className="py-3 px-6 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm">
-                {selfCars.map((car) => (
-                  <tr key={car._id} className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-center">
-                      <img src={car.imageUrl} alt={car.model} className="w-20 h-20 object-cover rounded" />
-                    </td>
-                    <td className="py-3 px-6 text-center">{car.model}</td>
-                    <td className="py-3 px-6 text-center">${car.price}</td>
-                    <td className="py-3 px-6 text-center">{car.bookingCount}</td>
-                    <td className="py-3 px-6 text-center">{car.availability}</td>
-                    <td className="py-3 px-6 text-center">{new Date(car.dateAdded).toLocaleDateString()}</td>
-                    <td className="py-3 px-6 text-center flex gap-2 justify-center">
-                      <Link to={`/viewDetails/${car._id}`}>
-                        <button className="bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700">
-                          <FaEye />
-                        </button>
-                      </Link>
-                      <Link to={`/updateCarInfo/${car._id}`}>
-                        <button className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700">
-                          <CiEdit />
-                        </button>
-                      </Link>
-                      <button onClick={() => handleDelete(car._id)} className="bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-700">
-                        <FaTrashRestore />
-                      </button>
-                    </td>
+          {/* No Cars Found Message */}
+          {selfCars.length === 0 ? (
+            <div className="text-center py-10">
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">You haven't added any cars yet!</h2>
+              <Link to="/addCar">
+                <button className="btn btn-success text-white px-4 py-2 rounded-md">
+                  Add Your First Car
+                </button>
+              </Link>
+            </div>
+          ) : (
+            // Cars Table
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                  <tr>
+                    <th className="py-3 px-6 text-center">Car Image</th>
+                    <th className="py-3 px-6 text-center">Car Model</th>
+                    <th className="py-3 px-6 text-center">Daily Rental Price</th>
+                    <th className="py-3 px-6 text-center">Booking Count</th>
+                    <th className="py-3 px-6 text-center">Availability</th>
+                    <th className="py-3 px-6 text-center">Date Added</th>
+                    <th className="py-3 px-6 text-center">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="text-gray-600 text-sm">
+                  {selfCars.map((car) => (
+                    <tr key={car._id} className="border-b border-gray-200 hover:bg-gray-100">
+                      <td className="py-3 px-6 text-center">
+                        <img src={car.imageUrl} alt={car.model} className="w-20 h-20 object-cover rounded" />
+                      </td>
+                      <td className="py-3 px-6 text-center">{car.model}</td>
+                      <td className="py-3 px-6 text-center">${car.price}</td>
+                      <td className="py-3 px-6 text-center">{car.bookingCount}</td>
+                      <td className="py-3 px-6 text-center">{car.availability}</td>
+                      <td className="py-3 px-6 text-center">{new Date(car.dateAdded).toLocaleDateString()}</td>
+                      <td className="py-3 px-6 text-center flex gap-2 justify-center">
+                        <Link to={`/viewDetails/${car._id}`}>
+                          <button className="bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700">
+                            <FaEye />
+                          </button>
+                        </Link>
+                        <Link to={`/updateCarInfo/${car._id}`}>
+                          <button className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700">
+                            <CiEdit />
+                          </button>
+                        </Link>
+                        <button onClick={() => handleDelete(car._id)} className="bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-700">
+                          <FaTrashRestore />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
       <Footer />
