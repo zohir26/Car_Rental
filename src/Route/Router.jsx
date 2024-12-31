@@ -15,6 +15,7 @@ import AddCar from "../pages/car/AddCar";
 import AvailableCars from "../pages/car/AvailableCars";
 import ViewDetails from "../pages/car/ViewDetails";
 import UpdateCarInfo from "../pages/car/UpdateCarInfo";
+// import UpdateBooking from "../pages/car/UpdateBooking";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,12 @@ const router = createBrowserRouter([
       <MyBookings></MyBookings>
     </PrivateRoute>
   },
+  // {
+  //   path: '/updateBooking/:id',
+  //   element: <PrivateRoute>
+  //     <UpdateBooking></UpdateBooking>
+  //   </PrivateRoute>
+  // },
   {
     path: "*",
     element: <ErrorPage></ErrorPage>

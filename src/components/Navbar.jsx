@@ -31,7 +31,10 @@ const Navbar = () => {
             <Link to="/myCars">My Cars</Link>
           </li>
           <li className="p-2">
-            <Link to="/my-bookings">My Bookings</Link>
+            <Link to="/myBookings">My Bookings</Link>
+          </li>
+          <li className="p-2">
+            <Link to="/updateBooking">Update Bookings</Link>
           </li>
           <li className="p-2">
             <Link to="/updateUser">Update User</Link>
