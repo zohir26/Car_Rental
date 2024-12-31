@@ -6,6 +6,7 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import RecentListing from '../components/RecentListing';
 import CustomerReview from '../components/CustomerReview';
 import Deals from '../components/Deals';
+import SearchBar from '../components/SearchBar';
 
 const HomeLayout = () => {
     return (
@@ -18,6 +19,11 @@ const HomeLayout = () => {
                 <div className='h-[500px]'>
                     <Banner />
                 </div>
+{/*                 
+                <div>
+                    <SearchBar></SearchBar>
+                </div> */}
+
                 <div>
                     <WhyChooseUs></WhyChooseUs>
                 </div>
