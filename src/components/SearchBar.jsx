@@ -1,102 +1,7 @@
-// import React, { useState } from 'react';
-// import Swal from 'sweetalert2';
-
-// const SearchBar = ({ onSearch }) => {
-//   const [pickupLocation, setPickupLocation] = useState('');
-//   const [dropoffLocation, setDropoffLocation] = useState('');
-//   const [pickupDate, setPickupDate] = useState('');
-//   const [dropoffDate, setDropoffDate] = useState('');
-//   const [pickupTime, setPickupTime] = useState('');
-//   const [dropoffTime, setDropoffTime] = useState('');
-
-//   const handleSearch = () => {
-//     if (!pickupLocation || !dropoffLocation || !pickupDate || !dropoffDate || !pickupTime || !dropoffTime) {
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Missing Information',
-//         text: 'Please fill in all fields',
-//       });
-//       return;
-//     }
-//     onSearch({
-//       pickupLocation,
-//       dropoffLocation,
-//       pickupDate,
-//       dropoffDate,
-//       pickupTime,
-//       dropoffTime
-//     });
-//   };
-
-//   return (
-//     <div className="bg-gray-900 p-6 rounded-lg shadow-md text-white">
-//       <div className="flex flex-col gap-4 md:flex-row md:flex-wrap">
-//         {/* Pickup Location */}
-//         <input 
-//           type="text" 
-//           placeholder="Pick-up Location" 
-//           value={pickupLocation} 
-//           onChange={(e) => setPickupLocation(e.target.value)}
-//           className="p-2 rounded-md text-gray-800 flex-grow"
-//         />
-        
-//         {/* Pickup Date and Time */}
-//         <div className="flex flex-col gap-2 md:flex-row md:flex-grow">
-//           <input 
-//             type="date" 
-//             value={pickupDate} 
-//             onChange={(e) => setPickupDate(e.target.value)}
-//             className="p-2 rounded-md text-gray-800 flex-grow"
-//           />
-//           <input 
-//             type="time" 
-//             value={pickupTime} 
-//             onChange={(e) => setPickupTime(e.target.value)}
-//             className="p-2 rounded-md text-gray-800 flex-grow mt-1 md:mt-0"
-//           />
-//         </div>
-        
-//         {/* Drop-off Location */}
-//         <input 
-//           type="text" 
-//           placeholder="Drop-off Location" 
-//           value={dropoffLocation} 
-//           onChange={(e) => setDropoffLocation(e.target.value)}
-//           className="p-2 rounded-md text-gray-800 flex-grow"
-//         />
-        
-//         {/* Drop-off Date and Time */}
-//         <div className="flex flex-col gap-2 md:flex-row md:flex-grow">
-//           <input 
-//             type="date" 
-//             value={dropoffDate} 
-//             onChange={(e) => setDropoffDate(e.target.value)}
-//             className="p-2 rounded-md text-gray-800 flex-grow"
-//           />
-//           <input 
-//             type="time" 
-//             value={dropoffTime} 
-//             onChange={(e) => setDropoffTime(e.target.value)}
-//             className="p-2 rounded-md text-gray-800 flex-grow mt-1 md:mt-0"
-//           />
-//         </div>
-        
-//         {/* Search Button */}
-//         <button 
-//           onClick={handleSearch}
-//           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md w-full md:w-auto"
-//         >
-//           Show Cars
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchBar;
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const SearchBar = ({ booking, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -107,6 +12,8 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     pickupTime: '',
     dropoffTime: ''
   });
+
+  const [activeCars, setActiveCars] = useState([]);
 
   useEffect(() => {
     if (booking) {
@@ -146,6 +53,30 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
       .catch((error) => {
         console.error("Error updating booking:", error);
         Swal.fire("Error!", "Failed to update booking.", "error");
+      });
+  };
+
+  const handleActiveCars = () => {
+    const { pickupLocation, dropoffLocation } = formData;
+    axios.get('http://localhost:4000/addCar')
+      .then((res) => {
+        const cars = res.data;
+        const filteredCars = cars.filter(car => 
+          car.location.toLowerCase().includes(pickupLocation.toLowerCase()) || 
+          car.location.toLowerCase().includes(dropoffLocation.toLowerCase())
+        );
+        setActiveCars(filteredCars);
+        if (filteredCars.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Active Cars',
+            text: 'No active cars found for the entered location.'
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching active cars:", error);
+        Swal.fire("Error!", "Failed to fetch active cars.", "error");
       });
   };
 
@@ -209,18 +140,51 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
         </div>
         
         {/* Update Button */}
+        {booking && (
+          <>
+            <button 
+              onClick={handleUpdate}
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md w-full md:w-auto"
+            >
+              Update Booking
+            </button>
+            <button 
+              onClick={onClose}
+              className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md w-full md:w-auto"
+            >
+              Cancel
+            </button>
+          </>
+        )}
+        
+        {/* Active Cars Button */}
         <button 
-          onClick={handleUpdate}
+          onClick={handleActiveCars}
           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md w-full md:w-auto"
         >
-          Update Booking
+          Active Cars
         </button>
-        <button 
-          onClick={onClose}
-          className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md w-full md:w-auto"
-        >
-          Cancel
-        </button>
+      </div>
+
+      {/* Display Active Cars */}
+      <h2 className="text-2xl font-semibold text-center mt-8">Active Cars</h2>
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {activeCars.map((car, index) => (
+          <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src={car.imageUrl} alt={car.model} className="w-full h-48 object-cover" />
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2">{car.model}</h3>
+              <p className="text-gray-600 mb-2">Daily Rental Price: ${car.price}</p>
+              <p className="text-gray-600 mb-2">Availability: {car.availability}</p>
+              <p className="text-gray-600 mb-2">Location: {car.location}</p>
+              <Link to={`/viewDetails/${car._id}`}>
+                <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+                  View Details
+                </button>
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
