@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import app from './../Firebase/Firebase.init';
+import axios from 'axios';
 export const auth = getAuth(app)
 export const AuthContext= createContext()
 const AuthProvider = ({children}) => {
@@ -21,7 +22,27 @@ const signInUser= (email,password)=>{
 useEffect(()=>{
     const observer= onAuthStateChanged(auth,(currentUser)=>{
         setUser(currentUser)
-        setLoading(false)
+        if(currentUser ?. email){
+            const user= {email:currentUser.email}
+
+            axios.post('http://localhost:4000/jwt',user, {
+                withCredentials:true
+            })
+            .then(res =>{
+                console.log(res.data)
+                setLoading(false)
+            })
+        }
+        else{
+            axios.post('http://localhost:4000/logoutToken',{},{
+                withCredentials:true
+            })
+            .then(res=>{
+                console.log('logout',res.data)
+                setLoading(false)
+            })
+        }
+        
     })
     return ()=>{
         observer()

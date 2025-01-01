@@ -25,7 +25,9 @@ const MyBookings = () => {
   }, [user?.email]);
 
   const fetchBookings = () => {
-    axios.get(`http://localhost:4000/myBookings?userEmail=${user.email}`)
+    axios.get(`http://localhost:4000/myBookings?userEmail=${user.email}`, {
+      withCredentials:true
+    })
       .then(res => setBooking(res.data))
       .catch(error => console.error("Error fetching bookings:", error));
   };

@@ -15,7 +15,9 @@ const MyCars = () => {
 
   // Fetch user's cars
   useEffect(() => {
-    axios.get(`http://localhost:4000/myCars?userEmail=${user.email}`)
+    axios.get(`http://localhost:4000/myCars?userEmail=${user.email}`,{
+      withCredentials:true
+    })
       .then(res => {
         setSelfCars(res.data);
       })
