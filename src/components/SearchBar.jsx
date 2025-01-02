@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const SearchBar = ({ booking, onClose, onUpdate }) => {
+  // State to manage form data
   const [formData, setFormData] = useState({
     pickupLocation: '',
     dropoffLocation: '',
@@ -13,14 +14,17 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     dropoffTime: ''
   });
 
+  // State to manage active cars
   const [activeCars, setActiveCars] = useState([]);
 
+  // Set initial form data if booking is provided
   useEffect(() => {
     if (booking) {
       setFormData(booking);
     }
   }, [booking]);
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -29,6 +33,33 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     }));
   };
 
+  // Handle update booking
+  // const handleUpdate = () => {
+  //   const { pickupLocation, dropoffLocation, pickupDate, dropoffDate, pickupTime, dropoffTime } = formData;
+  //   if (!pickupLocation || !dropoffLocation || !pickupDate || !dropoffDate || !pickupTime || !dropoffTime) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Missing Information',
+  //       text: 'Please fill in all fields',
+  //     });
+  //     return;
+  //   }
+
+  //   axios.put(`http://localhost:4000/updateBooking/${formData._id}`, formData, { withCredentials: true })
+  //     .then((res) => {
+  //       if (res.data.matchedCount > 0) {
+  //         Swal.fire("Updated!", "Your booking has been updated.", "success");
+  //         onUpdate(); // Refresh the bookings list
+  //         onClose(); // Close the update form
+  //       } else {
+  //         Swal.fire("Error!", "Failed to update booking.", "error");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating booking:", error);
+  //       Swal.fire("Error!", "Failed to update booking.", "error");
+  //     });
+  // };
   const handleUpdate = () => {
     const { pickupLocation, dropoffLocation, pickupDate, dropoffDate, pickupTime, dropoffTime } = formData;
     if (!pickupLocation || !dropoffLocation || !pickupDate || !dropoffDate || !pickupTime || !dropoffTime) {
@@ -39,23 +70,26 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
       });
       return;
     }
-
-    axios.put(`http://localhost:4000/updateBooking/${formData._id}`, formData)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          Swal.fire("Updated!", "Your booking has been updated.", "success");
-          onUpdate(); // Refresh the bookings list
-          onClose(); // Close the update form
-        } else {
-          Swal.fire("Error!", "Failed to update booking.", "error");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating booking:", error);
+  
+    // Send update request with the booking ID and new form data
+    axios.put(`http://localhost:4000/updateBooking/${formData._id}`, formData, { withCredentials: true })
+    .then((res) => {
+      if (res.data.result.matchedCount > 0) {
+        Swal.fire("Updated!", "Your booking has been updated.", "success");
+        onUpdate();  // Refresh the bookings list
+        onClose();   // Close the update form
+      } else {
         Swal.fire("Error!", "Failed to update booking.", "error");
-      });
+      }
+    })
+    .catch((error) => {
+      console.error("Error updating booking:", error);
+      Swal.fire("Error!", "Failed to update booking.", "error");
+    });
+  
   };
-
+  
+  // Handle fetching active cars based on location
   const handleActiveCars = () => {
     const { pickupLocation, dropoffLocation } = formData;
     axios.get('http://localhost:4000/addCar')

@@ -8,23 +8,68 @@ import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const MyCars = () => {
   const [selfCars, setSelfCars] = useState([]);
   const { user } = useContext(AuthContext);
 
-  // Fetch user's cars
-  useEffect(() => {
-    axios.get(`http://localhost:4000/myCars?userEmail=${user.email}`,{
-      withCredentials:true
-    })
-      .then(res => {
-        setSelfCars(res.data);
-      })
-      .catch(error => console.log(error));
-  }, [user.email]);
+  // use axios secure
+  const axiosSecure= useAxiosSecure();
+
+    // Fetch user's cars
+    // useEffect(() => {
+    //   axios.get(`http://localhost:4000/myCars?userEmail=${user.email}`, {
+    //     withCredentials: true
+    //   })
+    //     .then(res => {
+    //       setSelfCars(res.data);
+    //     })
+    //     .catch(error => console.log(error));
+    // }, [user.email]);
+
+    useEffect(() => {
+      axiosSecure.get(`/myCars?userEmail=${user.email}`)
+        .then(res => {
+          setSelfCars(res.data);
+        })
+        .catch(error => console.log(error));
+    }, [user.email,axiosSecure]);
+
 
   // Handle car deletion
+  // const handleDelete = (_id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!"
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios.delete(`http://localhost:4000/cars/${_id}`)
+  //         .then(res => {
+  //           if (res.data.deletedCount > 0) {
+  //             setSelfCars(selfCars.filter(car => car._id !== _id));
+  //             Swal.fire({
+  //               title: "Deleted!",
+  //               text: "Your car has been deleted.",
+  //               icon: "success"
+  //             });
+  //           }
+  //         })
+  //         .catch(() => {
+  //           Swal.fire({
+  //             title: "Error!",
+  //             text: "Car not found or already deleted.",
+  //             icon: "error"
+  //           });
+  //         });
+  //     }
+  //   });
+  // };
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -36,7 +81,7 @@ const MyCars = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:4000/cars/${_id}`)
+        axios.delete(`http://localhost:4000/cars/${_id}?userEmail=${user.email}`, { withCredentials: true })
           .then(res => {
             if (res.data.deletedCount > 0) {
               setSelfCars(selfCars.filter(car => car._id !== _id));
@@ -57,6 +102,7 @@ const MyCars = () => {
       }
     });
   };
+  
 
   // Sort by price
   const handleSortByPrice = () => {
@@ -79,11 +125,11 @@ const MyCars = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
             <h1 className="text-3xl font-extrabold text-gray-900">My Cars</h1>
             {
-              selfCars.length ===0 ? "" : (
+              selfCars.length === 0 ? "" : (
                 <div className="flex gap-2">
-              <button className="btn btn-primary" onClick={handleSortByPrice}>Sort by Price</button>
-              <button className="btn btn-warning" onClick={handleSortByDate}>Sort by Date</button>
-            </div>
+                  <button className="btn btn-primary" onClick={handleSortByPrice}>Sort by Price</button>
+                  <button className="btn btn-warning" onClick={handleSortByDate}>Sort by Date</button>
+                </div>
               )
             }
           </div>

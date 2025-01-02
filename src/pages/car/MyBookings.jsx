@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import Swal from 'sweetalert2';
 import SearchBar from '../../components/SearchBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const MyBookings = () => {
   const [booking, setBooking] = useState([]);
@@ -16,6 +17,9 @@ const MyBookings = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useContext(AuthContext);
+ 
+  // use axios secure
+const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user?.email) {
@@ -24,50 +28,93 @@ const MyBookings = () => {
     }
   }, [user?.email]);
 
+  // const fetchBookings = () => {
+  //   axios.get(`http://localhost:4000/myBookings?userEmail=${user.email}`, {
+  //     withCredentials:true
+  //   })
+  //     .then(res => setBooking(res.data))
+  //     .catch(error => console.error("Error fetching bookings:", error));
+  // };
+  // const fetchBookings = () => {
+  //   axiosSecure.get(`/myBookings?userEmail=${user.email}`)
+  //     .then(res => setBooking(res.data))
+  //     .catch(error => console.error("Error fetching bookings:", error));
+  // };
   const fetchBookings = () => {
-    axios.get(`http://localhost:4000/myBookings?userEmail=${user.email}`, {
-      withCredentials:true
-    })
+    axiosSecure.get('/myBookings')
       .then(res => setBooking(res.data))
       .catch(error => console.error("Error fetching bookings:", error));
   };
+  
 
   const fetchCarData = () => {
-    axios.get('http://localhost:4000/addCar')
+    axiosSecure.get('/addCar')
       .then(res => setCarData(res.data))
       .catch(error => console.error("Error fetching car data:", error));
   };
 
+  // const handleDelete = (_id) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes, delete it!",
+  //     cancelButtonText: "No, cancel!"
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axiosSecure.delete(`/myBookings/${_id}`)
+  //         .then(res => {
+  //           if (res.data.deletedCount > 0) {
+  //             setBooking(booking.filter(car => car._id !== _id));
+  //             Swal.fire("Deleted!", "Your booking has been deleted.", "success");
+  //           } else {
+  //             Swal.fire("Error!", "No booking found with this ID.", "error");
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           Swal.fire("Error!", "Failed to delete booking.", error);
+  //         });
+  //     }
+  //   });
+  // };
+
   const handleDelete = (_id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!"
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!"
     }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`http://localhost:4000/myBookings/${_id}`)
-          .then(res => {
-            if (res.data.deletedCount > 0) {
-              setBooking(booking.filter(car => car._id !== _id));
-              Swal.fire("Deleted!", "Your booking has been deleted.", "success");
-            } else {
-              Swal.fire("Error!", "No booking found with this ID.", "error");
-            }
-          })
-          .catch((error) => {
-            Swal.fire("Error!", "Failed to delete booking.", error);
-          });
-      }
+        if (result.isConfirmed) {
+            axiosSecure.delete(`/myBookings/${_id}`)
+                .then(res => {
+                    Swal.fire("Deleted!", "Your booking has been deleted.", "success");
+                    setBooking(prev => prev.filter(car => car._id !== _id));
+                })
+                .catch(error => {
+                    console.error("Error deleting booking:", error);
+                    Swal.fire("Error!", "Failed to delete booking.", "error");
+                });
+        }
     });
-  };
+};
+
+  
+  
+  // const handleUpdate = (car) => {
+  //   setSelectedBooking(car);
+  //   setIsUpdating(true);
+  // };
 
   const handleUpdate = (car) => {
-    setSelectedBooking(car);
-    setIsUpdating(true);
+    setSelectedBooking(car);  // Set the selected booking for updating
+    setIsUpdating(true);      // Show the SearchBar for updating
   };
+  
+
 
   return (
     <>

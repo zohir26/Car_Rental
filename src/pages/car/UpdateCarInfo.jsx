@@ -37,18 +37,50 @@ const UpdateCarInfo = () => {
     setCarData({ ...carData, [name]: value });
   };
 
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(carData);
+  //   const userCarData = {
+  //     ...carData,
+  //     userEmail: user.email,
+  //     dateAdded: new Date().toISOString()
+  //   };
+
+  //   axios.put(`http://localhost:4000/updateCarInfo/${carData._id}`, userCarData)
+  //     .then(res => {
+  //       if (res.data.modifiedCount > 0) {
+  //         Swal.fire({
+  //           title: 'Success!',
+  //           text: 'Your car has been updated.',
+  //           icon: 'success',
+  //           confirmButtonText: 'OK'
+  //         });
+  //         navigate('/myCars');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       Swal.fire({
+  //         title: 'Error!',
+  //         text: 'Failed to update the car.',
+  //         icon: 'error',
+  //         confirmButtonText: 'OK'
+  //       });
+  //     });
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(carData);
+  
+    // Prepare data to send to the backend
     const userCarData = {
-      ...carData,
-      userEmail: user.email,
-      dateAdded: new Date().toISOString()
+      ...carData, // No need to include userEmail here
+      dateAdded: new Date().toISOString() // Add dateAdded or remove if unnecessary
     };
-
+  
+    // Send PUT request with updated car data
     axios.put(`http://localhost:4000/updateCarInfo/${carData._id}`, userCarData)
       .then(res => {
-        if (res.data.modifiedCount > 0) {
+        if (res.data.matchedCount > 0) { // matchedCount should be checked, not modifiedCount
           Swal.fire({
             title: 'Success!',
             text: 'Your car has been updated.',
@@ -68,7 +100,7 @@ const UpdateCarInfo = () => {
         });
       });
   };
-
+  
   return (
     <>
       <Navbar />
