@@ -3,13 +3,20 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import SearchBar from '../../components/SearchBar';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import Loading from '../../components/Loading';
 
 const AvailableCars = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [layoutStyle, setLayoutStyle] = useState('grid');
-
+  const dataCount = useLoaderData();
+  const itemsPerPage= 2 ;
+  const numberOfPages= Math.ceil(dataCount/itemsPerPage)
+  if(!dataCount){
+    return <Loading></Loading>
+  }
+  // console.log(count)
   useEffect(() => {
     axios.get('http://localhost:4000/addCar')
       .then(res => {
@@ -37,7 +44,7 @@ const AvailableCars = () => {
       <Navbar />
       <div className="min-h-screen bg-gray-100 p-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Available Cars</h1>
+          <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Available Cars:{dataCount.length}</h1>
           <div className="mb-8">
             <SearchBar onSearch={handleSearch} />
           </div>

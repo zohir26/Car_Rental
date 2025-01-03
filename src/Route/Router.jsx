@@ -45,7 +45,14 @@ const router = createBrowserRouter([
   {
     path: '/availableCar',
     element: 
-       <AvailableCars></AvailableCars>
+       <AvailableCars></AvailableCars>,
+       loader: async()=>{
+        const response = await fetch('http://localhost:4000/addCar');
+        if(!response.ok){
+          throw new Error('failed to fetch data');
+        }
+        return response.json();
+       }
    
   },
   {
