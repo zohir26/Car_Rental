@@ -30,7 +30,7 @@ const HomeLayout = () => {
                 <div>
                     <RecentListing></RecentListing>
                 </div>
-                <div>
+                <div className='grid grid-cols-1 lg:grid-cols-3'>
                     <CustomerReview></CustomerReview>
                 </div>
                 <div>

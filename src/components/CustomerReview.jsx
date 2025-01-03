@@ -25,7 +25,15 @@ const CustomerReview = () => {
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={30}
-          slidesPerView={3}
+          breakpoints={{
+            640:{
+              slidesPerView:1,
+            },
+            1024:{
+              slidesPerView:3
+            },
+          }}
+          
           navigation
           pagination={{ clickable: true }}
           autoplay={{ delay: 3000 }}

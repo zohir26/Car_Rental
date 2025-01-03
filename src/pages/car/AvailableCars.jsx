@@ -125,7 +125,7 @@ const handleNextPage = ()=>{
             )}
           </div>
         </div>
-        <div className='flex justify-center items-center gap-2 p-4'>
+        <div className='flex flex-col lg:flex-row justify-center items-center gap-2 p-4'>
           {/* <p>current page:{currentPage}</p> */}
           <button 
           className='btn btn-primary'

@@ -60,9 +60,9 @@ const AddCar = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
-        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform skew-y-0 rotate-6 rounded-3xl"></div>
+      <div className="min-h-screen bg-gray-100 flex flex-col justify-center  ">
+        <div className="relative py-5 sm:max-w-xl sm:mx-auto">
+          <div className="absolute inset-0 lg:bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform skew-y-0 rotate-6 rounded-3xl sm:rounded-none"></div>
           <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
             <div className="max-w-md mx-auto">
               <div className="text-center text-2xl font-semibold">Add New Car</div>
