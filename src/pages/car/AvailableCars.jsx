@@ -110,6 +110,7 @@ const handleNextPage = ()=>{
                     <h3 className="text-xl font-semibold mb-2">{car.model}</h3>
                     <p className="text-gray-600 mb-2">Daily Rental Price: ${car.price}</p>
                     <p className="text-gray-600 mb-2">Availability: {car.availability}</p>
+                    <p className="text-gray-600 mb-2">Booking Count: {car.bookingCount}</p>
                     <p className="text-gray-600 mb-2">Location: {car.location}</p>
                     <Link to={`/viewDetails/${car._id}`}>
                       <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">

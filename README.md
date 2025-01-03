@@ -12,7 +12,7 @@ A car rental website where the the user can add car or book a car.
 7. Axios interceptor implemented
 8. Pagination applied
 
-# npm package used:
+# NPM package used:
 1. Swiper
 2. React icons
 3. Sweet alert
@@ -21,7 +21,7 @@ A car rental website where the the user can add car or book a car.
 7. Express
 8. Cors
 
-# Live url:[URL](https://car-rental-f7654.web.app/)
+# Live URL:[Link](https://car-rental-f7654.web.app/)
 
 # GitHub Links
 1. Client side: [Client](https://github.com/zohir26/Car-Rental-Client)

@@ -34,7 +34,8 @@ const AddCar = () => {
     // Include user to car data
     const userCarData = {...carData,
          userEmail: user.email,
-         dateAdded:new Date().toISOString() //add current time
+         dateAdded:new Date().toISOString(), //add current time
+        
         };
     // send data to database
     axios.post('http://localhost:4000/addCar',userCarData)

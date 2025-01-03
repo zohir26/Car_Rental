@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import Loading from '../../components/Loading';
 
 const ViewDetails = () => {
   const { id } = useParams(); // Get the car ID from the URL parameters
@@ -18,33 +19,51 @@ const ViewDetails = () => {
   }, [id]);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loading></Loading>;
   }
 
-  const handleBookings= ()=>{
-    const bookingData = {...data,
-      userEmail: user.email,
-      dateAdded:new Date().toISOString() //add current time
-     };
+  const handleBookings = () => {
+    if (!user?.email) {
+      Swal.fire({
+        title: 'Not Logged In',
+        text: 'Please log in to book a car.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      navigate('/login');
+      return;
+    }
 
-     axios.post('http://localhost:4000/myBookings',bookingData)
-    .then(res=>{
-       console.log(res.data)
-       if(res.data.insertedId){
-        Swal.fire({
+    const bookingData = {
+      ...data,
+      userEmail: user.email,
+      carId: data._id, // Ensure you're sending the car ID
+      dateAdded: new Date().toISOString()
+    };
+
+    axios.post('http://localhost:4000/myBookings', bookingData)
+      .then(res => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
             title: 'Success!',
             text: 'Your Booking has been successful.',
             icon: 'success',
             confirmButtonText: 'OK'
           });
-       }
-
-       navigate('/myBookings')
-    })
-    .catch(error=>{
-        console.log(error)
-    })
-  }
+          navigate('/myBookings');
+        }
+      })
+      .catch(error => {
+        console.error('Booking Error:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to complete the booking.',
+          icon: 'error',
+          confirmButtonText: 'Try Again'
+        });
+      });
+  };
   return (
         <>
         <Navbar></Navbar>

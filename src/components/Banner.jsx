@@ -25,7 +25,7 @@ const Banner = () => {
       <div className='absolute z-50 text-black text-center'>
         <TypeAnimation sequence={['"Drive Your Dreams Today!"', 1000, 'Experience the best rental cars at affordable prices', 2000,]}
           wrapper="span" speed={50} style={{ fontSize: '2em', display: 'inline-block' }} repeat={Infinity} /> <div className='mt-4'>
-          <Link to=''> <button className='mt-2 px-4 py-2  bg-blue-600 text-white rounded-md'>View Available Cars</button> </Link> </div> </div>
+          <Link to='/availableCar'> <button className='mt-2 px-4 py-2  bg-blue-600 text-white rounded-md'>View Available Cars</button> </Link> </div> </div>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectCoverflow]}
         effect="coverflow"
