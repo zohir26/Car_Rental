@@ -7,56 +7,95 @@ import { Link, useLoaderData } from 'react-router-dom';
 import Loading from '../../components/Loading';
 
 const AvailableCars = () => {
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const data = useLoaderData(); // Get the array of cars from loader
+  const [filteredData, setFilteredData] = useState(data); // Initialize with loaded data
   const [layoutStyle, setLayoutStyle] = useState('grid');
-  const dataCount = useLoaderData();
-  const itemsPerPage= 2 ;
-  const numberOfPages= Math.ceil(dataCount/itemsPerPage)
-  if(!dataCount){
-    return <Loading></Loading>
+  const [itemsPerPage, setItemsPerPage]= useState(2)
+  const [currentPage, setCurrentPage]= useState(0);
+
+  // Validate data
+  if (!Array.isArray(data)) {
+    console.error('Invalid data:', data);
+    return <div>Error: Invalid data format</div>;
   }
-  // console.log(count)
+
+  const dataCount = data.length;
+  const numberOfPages = Math.ceil(dataCount / itemsPerPage);
+
+  // Create Dynamic Page with the available data
+  const pages = [...Array(numberOfPages).keys()];
+
+  // useEffect(() => {
+  //   if (!data.length) {
+  //     axios.get(`http://localhost:4000/addCar?page=${currentPage}&size=${itemsPerPage}`)
+  //       .then(res => {
+  //         setFilteredData(res.data); // Initial load shows all cars
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [data, currentPage]);
   useEffect(() => {
-    axios.get('http://localhost:4000/addCar')
+    axios.get(`http://localhost:4000/addCar?page=${currentPage}&size=${itemsPerPage}`)
       .then(res => {
-        setData(res.data);
-        setFilteredData(res.data); // Initial load shows all cars
+        setFilteredData(res.data); // Update car data
+    
       })
       .catch(error => {
-        console.log(error);
+        console.log('Error fetching paginated data:', error);
       });
-  }, []);
+  }, [currentPage, itemsPerPage]);
+  
 
   const handleSearch = (filters) => {
     const { pickupLocation, dropoffLocation } = filters;
 
-    const filtered = data.filter(car => 
-      car.location.toLowerCase().includes(pickupLocation.toLowerCase()) || 
+    const filtered = data.filter(car =>
+      car.location.toLowerCase().includes(pickupLocation.toLowerCase()) ||
       car.location.toLowerCase().includes(dropoffLocation.toLowerCase())
     );
 
     setFilteredData(filtered);
   };
 
+  if (!data.length) {
+    return <Loading />;
+  }
+const handleItemsPerPageChange = (e)=>{
+  // convert the value into string to number of calculation
+ const value = parseInt(e.target.value)
+  setItemsPerPage(value)
+  setCurrentPage(0);
+}
+const handlePreviousPage = ()=>{
+  if (currentPage > 0) {
+    setCurrentPage(currentPage - 1)
+  }
+}
+const handleNextPage = ()=>{
+  if (currentPage < pages.length - 1 ){
+    setCurrentPage (currentPage + 1)
+  }
+}
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-100 p-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Available Cars:{dataCount.length}</h1>
+          <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Available Cars: {dataCount}</h1>
           <div className="mb-8">
             <SearchBar onSearch={handleSearch} />
           </div>
           <div className="flex justify-end mb-4">
-            <button 
-              onClick={() => setLayoutStyle('grid')} 
+            <button
+              onClick={() => setLayoutStyle('grid')}
               className={`px-4 py-2 mr-2 ${layoutStyle === 'grid' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
             >
               Grid View
             </button>
-            <button 
-              onClick={() => setLayoutStyle('list')} 
+            <button
+              onClick={() => setLayoutStyle('list')}
               className={`px-4 py-2 ${layoutStyle === 'list' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
             >
               List View
@@ -85,6 +124,29 @@ const AvailableCars = () => {
             )}
           </div>
         </div>
+        <div className='flex justify-center items-center gap-2 p-4'>
+          {/* <p>current page:{currentPage}</p> */}
+          <button 
+          className='btn btn-primary'
+          onClick={handlePreviousPage}>previous</button>
+          {
+            pages.map(page=><button 
+            onClick={()=>setCurrentPage(page)}  
+            className={`btn ${currentPage === page ? 'btn-warning':''}`}
+            >{page}</button>)
+          }
+          <select value={itemsPerPage} onChange={handleItemsPerPageChange} id="" className='btn btn-success text-white'>
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+          <button
+        className='btn btn-primary'
+        onClick={handleNextPage}
+        >Next</button>
+        </div>
+
       </div>
       <Footer />
     </>

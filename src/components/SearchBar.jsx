@@ -18,11 +18,26 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
   const [activeCars, setActiveCars] = useState([]);
 
   // Set initial form data if booking is provided
+  // useEffect(() => {
+  //   if (booking) {
+  //     setFormData(booking);
+  //   }
+  // }, [booking]);
+
   useEffect(() => {
     if (booking) {
-      setFormData(booking);
+      setFormData({
+        pickupLocation: booking.pickupLocation || '',
+        dropoffLocation: booking.dropoffLocation || '',
+        pickupDate: booking.pickupDate || '',
+        dropoffDate: booking.dropoffDate || '',
+        pickupTime: booking.pickupTime || '',
+        dropoffTime: booking.dropoffTime || '',
+        _id: booking._id || ''
+      });
     }
   }, [booking]);
+  
 
   // Handle input changes
   const handleChange = (e) => {
