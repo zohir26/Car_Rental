@@ -25,7 +25,7 @@ useEffect(()=>{
         if(currentUser ?. email){
             const user= {email:currentUser.email}
 
-            axios.post('http://localhost:4000/jwt',user, {
+            axios.post('https://car-rental-server-lyart.vercel.app/jwt',user, {
                 withCredentials:true
             })
             .then(res =>{
@@ -34,7 +34,7 @@ useEffect(()=>{
             })
         }
         else{
-            axios.post('http://localhost:4000/logoutToken',{},{
+            axios.post('https://car-rental-server-lyart.vercel.app/logoutToken',{},{
                 withCredentials:true
             })
             .then(res=>{

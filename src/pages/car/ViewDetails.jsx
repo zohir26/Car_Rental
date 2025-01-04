@@ -13,7 +13,7 @@ const ViewDetails = () => {
   const {user}= useContext(AuthContext);
   const navigate= useNavigate()
   useEffect(() => {
-    axios.get(`http://localhost:4000/viewDetails/${id}`)
+    axios.get(`https://car-rental-server-lyart.vercel.app/viewDetails/${id}`)
       .then(res => setData(res.data))
       .catch(error => console.log(error));
   }, [id]);
@@ -41,10 +41,10 @@ const ViewDetails = () => {
       dateAdded: new Date().toISOString()
     };
 
-    axios.post('http://localhost:4000/myBookings', bookingData)
+    axios.post('https://car-rental-server-lyart.vercel.app/myBookings', bookingData)
       .then(res => {
         console.log(res.data);
-        if (res.data.insertedId) {
+        if (res.data.bookingId) {
           Swal.fire({
             title: 'Success!',
             text: 'Your Booking has been successful.',

@@ -8,7 +8,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdateCarInfo = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
   const { id } = useParams(); // Get car ID from URL parameters
   const [carData, setCarData] = useState({
     model: '',
@@ -17,19 +16,15 @@ const UpdateCarInfo = () => {
     registrationNumber: '',
     features: '',
     description: '',
-    bookingCount: 0,
     imageUrl: '',
     location: '',
   });
 
+  // Fetch car details
   useEffect(() => {
-    axios.get(`http://localhost:4000/updateCarInfo/${id}`)
-      .then(res => {
-        setCarData(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    axios.get(`https://car-rental-server-lyart.vercel.app/carDetails/${id}`) // Ensure this matches your backend endpoint
+      .then(res => setCarData(res.data))
+      .catch(error => console.error('Error fetching car details:', error));
   }, [id]);
 
   const handleChange = (event) => {
@@ -37,70 +32,43 @@ const UpdateCarInfo = () => {
     setCarData({ ...carData, [name]: value });
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log(carData);
-  //   const userCarData = {
-  //     ...carData,
-  //     userEmail: user.email,
-  //     dateAdded: new Date().toISOString()
-  //   };
-
-  //   axios.put(`http://localhost:4000/updateCarInfo/${carData._id}`, userCarData)
-  //     .then(res => {
-  //       if (res.data.modifiedCount > 0) {
-  //         Swal.fire({
-  //           title: 'Success!',
-  //           text: 'Your car has been updated.',
-  //           icon: 'success',
-  //           confirmButtonText: 'OK'
-  //         });
-  //         navigate('/myCars');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       Swal.fire({
-  //         title: 'Error!',
-  //         text: 'Failed to update the car.',
-  //         icon: 'error',
-  //         confirmButtonText: 'OK'
-  //       });
-  //     });
-  // };
   const handleSubmit = (event) => {
     event.preventDefault();
-  
-    // Prepare data to send to the backend
     const userCarData = {
-      ...carData, // No need to include userEmail here
-      dateAdded: new Date().toISOString() // Add dateAdded or remove if unnecessary
+      ...carData,
+      dateAdded: new Date().toISOString(), // Optional
     };
-  
-    // Send PUT request with updated car data
-    axios.put(`http://localhost:4000/updateCarInfo/${carData._id}`, userCarData)
+
+    axios.put(`https://car-rental-server-lyart.vercel.app/updateCarInfo/${id}`, userCarData)
       .then(res => {
-        if (res.data.matchedCount > 0) { // matchedCount should be checked, not modifiedCount
+        if (res.data.success) {
           Swal.fire({
             title: 'Success!',
             text: 'Your car has been updated.',
             icon: 'success',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
           });
           navigate('/myCars');
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Car not found or failed to update.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error('Update Error:', error);
         Swal.fire({
           title: 'Error!',
           text: 'Failed to update the car.',
           icon: 'error',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         });
       });
   };
-  
+
   return (
     <>
       <Navbar />
@@ -111,85 +79,21 @@ const UpdateCarInfo = () => {
             <div className="max-w-md mx-auto">
               <div className="text-center text-2xl font-semibold">Update Car</div>
               <form className="mt-8" onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Car Model"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="model"
-                    value={carData.model}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="number"
-                    placeholder="Daily Rental Price"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="price"
-                    value={carData.price}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Availability"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="availability"
-                    value={carData.availability}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Vehicle Registration Number"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="registrationNumber"
-                    value={carData.registrationNumber}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Features (e.g., GPS, AC, etc.)"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="features"
-                    value={carData.features}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <textarea
-                    placeholder="Description"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="description"
-                    value={carData.description}
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Image URL"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="imageUrl"
-                    value={carData.imageUrl}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Location"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
-                    name="location"
-                    value={carData.location}
-                    onChange={handleChange}
-                  />
-                </div>
+                {/* Input fields */}
+                {Object.keys(carData).map((key) => (
+                  key !== '_id' && (
+                    <div className="mb-4" key={key}>
+                      <input
+                        type="text"
+                        placeholder={key}
+                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                        name={key}
+                        value={carData[key]}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  )
+                ))}
                 <button className="w-full px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-700">
                   Update Car
                 </button>

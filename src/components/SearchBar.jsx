@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 const SearchBar = ({ booking, onClose, onUpdate }) => {
   // State to manage form data
@@ -13,7 +14,7 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     pickupTime: '',
     dropoffTime: ''
   });
-
+  // const axiosSecure = useAxiosSecure();
   // State to manage active cars
   const [activeCars, setActiveCars] = useState([]);
 
@@ -60,7 +61,7 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
   //     return;
   //   }
 
-  //   axios.put(`http://localhost:4000/updateBooking/${formData._id}`, formData, { withCredentials: true })
+  //   axios.put(`https://car-rental-server-lyart.vercel.app/updateBooking/${formData._id}`, formData, { withCredentials: true })
   //     .then((res) => {
   //       if (res.data.matchedCount > 0) {
   //         Swal.fire("Updated!", "Your booking has been updated.", "success");
@@ -87,7 +88,7 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     }
   
     // Send update request with the booking ID and new form data
-    axios.put(`http://localhost:4000/updateBooking/${formData._id}`, formData, { withCredentials: true })
+    axios.put(`https://car-rental-server-lyart.vercel.app/updateBooking/${formData._id}`, formData, { withCredentials: true })
     .then((res) => {
       if (res.data.result.matchedCount > 0) {
         Swal.fire("Updated!", "Your booking has been updated.", "success");
@@ -103,11 +104,31 @@ const SearchBar = ({ booking, onClose, onUpdate }) => {
     });
   
   };
+  // const handleUpdate = () => {
+  //   axios
+  //     .put(`https://car-rental-server-lyart.vercel.app/updateBooking/${formData._id}`, formData)
+  //     .then((res) => {
+  //       console.log("Update Response:", res.data); // Debug the response
+  //       if (res.data?.result?.matchedCount > 0) {
+  //         Swal.fire("Updated!", "Your booking has been updated.", "success");
+  //         fetchBookings(); // Fetch updated bookings
+  //         onClose(); // Close the modal or form
+  //       } else {
+  //         Swal.fire("Error!", "Failed to update booking.", "error");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating booking:", error);
+  //       Swal.fire("Error!", "Failed to update booking.", "error");
+  //     });
+  // };
   
+  
+
   // Handle fetching active cars based on location
   const handleActiveCars = () => {
     const { pickupLocation, dropoffLocation } = formData;
-    axios.get('http://localhost:4000/addCar')
+    axios.get('https://car-rental-server-lyart.vercel.app/addCar')
       .then((res) => {
         const cars = res.data;
         const filteredCars = cars.filter(car => 

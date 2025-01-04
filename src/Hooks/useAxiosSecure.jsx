@@ -4,9 +4,10 @@ import { auth, AuthContext } from '../Provider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:4000',
-  withCredentials: true
+  baseURL: 'https://car-rental-server-lyart.vercel.app',
+  withCredentials: true, // This ensures cookies are sent
 });
+
 
 const useAxiosSecure = () => {
   const { signOutUser } = useContext(AuthContext);

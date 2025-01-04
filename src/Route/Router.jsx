@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     element: 
        <AvailableCars></AvailableCars>,
        loader: async()=>{
-        const response = await fetch('http://localhost:4000/addCar');
+        const response = await fetch('https://car-rental-server-lyart.vercel.app/addCar');
         if(!response.ok){
           throw new Error('failed to fetch data');
         }

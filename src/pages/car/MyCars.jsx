@@ -16,14 +16,25 @@ const MyCars = () => {
   const axiosSecure = useAxiosSecure();
 
   // Fetch user's cars
+  // useEffect(() => {
+  //   axiosSecure.get(`/myCars?userEmail=${user.email}`)
+  //     .then(res => {
+  //       setSelfCars(res.data);
+  //     })
+  //     .catch(error => console.log(error));
+  // }, [user.email, axiosSecure]);
   useEffect(() => {
-    axiosSecure.get(`/myCars?userEmail=${user.email}`)
-      .then(res => {
-        setSelfCars(res.data);
-      })
-      .catch(error => console.log(error));
-  }, [user.email, axiosSecure]);
-
+    if (user?.email) {
+      axiosSecure.get('/myCars',{ withCredentials: true})
+        .then(res => {
+          setSelfCars(res.data);
+        })
+        .catch(error => {
+          console.error('Failed to fetch user cars:', error.response?.data || error.message);
+        });
+    }
+  }, [user?.email, axiosSecure]);
+  
   // Handle car deletion
   const handleDelete = (_id) => {
     Swal.fire({
@@ -36,7 +47,7 @@ const MyCars = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:4000/cars/${_id}?userEmail=${user.email}`, { withCredentials: true })
+        axiosSecure.delete(`/cars/${_id}`)
           .then(res => {
             if (res.data.deletedCount > 0) {
               setSelfCars(selfCars.filter(car => car._id !== _id));

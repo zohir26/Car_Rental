@@ -38,7 +38,7 @@ const AddCar = () => {
         
         };
     // send data to database
-    axios.post('http://localhost:4000/addCar',userCarData)
+    axios.post('https://car-rental-server-lyart.vercel.app/addCar',userCarData)
     .then(res=>{
        console.log(res.data)
        if(res.data.insertedId){
@@ -60,7 +60,7 @@ const AddCar = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center  ">
+      <div className="min-h-screen bg-gray-100 flex flex-col justify-center mt-10 ">
         <div className="relative py-5 sm:max-w-xl sm:mx-auto">
           <div className="absolute inset-0 lg:bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform skew-y-0 rotate-6 rounded-3xl sm:rounded-none"></div>
           <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">

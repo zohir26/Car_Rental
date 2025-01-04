@@ -26,16 +26,16 @@ const MyBookings = () => {
       fetchBookings();
       fetchCarData();
     }
-  }, [user?.email]);
+  }, [user?.email ]);
 
   const fetchBookings = () => {
-    axiosSecure.get('/myBookings')
+    axiosSecure.get('/myBookings',{withCredentials: true})
       .then(res => setBooking(res.data))
       .catch(error => console.error("Error fetching bookings:", error));
   };
 
   const fetchCarData = () => {
-    axiosSecure.get('/addCar')
+    axiosSecure.get('/addCar',{withCredentials: true})
       .then(res => setCarData(res.data))
       .catch(error => console.error("Error fetching car data:", error));
   };
@@ -50,18 +50,36 @@ const MyBookings = () => {
       cancelButtonText: "No, cancel!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/myBookings/${_id}`)
-          .then(res => {
-            Swal.fire("Deleted!", "Your booking has been deleted.", "success");
-            setBooking(prev => prev.filter(car => car._id !== _id));
+        axiosSecure
+          .delete(`/myBookings/${_id}`, { withCredentials: true })
+          .then((res) => {
+            console.log("Delete Response:", res.data); // Debug response data
+            if (res.data?.hasOwnProperty.length
+              > 0) {
+              // Update the state to reflect the changes immediately
+              setBooking((prevBookings) =>
+                prevBookings.filter((booking) => booking._id !== _id)
+              );
+  
+              // Show success alert
+              Swal.fire("Deleted!", "Your booking has been deleted.", "success").then(() => {
+                // Additional clean up or close modal if needed
+              });
+            } else {
+              Swal.fire("Error!", "Failed to delete booking.", "error");
+            }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error deleting booking:", error);
             Swal.fire("Error!", "Failed to delete booking.", "error");
           });
       }
     });
   };
+  
+  
+  
+  
 
   const handleUpdate = (car) => {
     setSelectedBooking(car);

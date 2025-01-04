@@ -13,7 +13,7 @@
 //   const [selectedCar, setSelectedCar] = useState(null);
 
 //   useEffect(() => {
-//     axios.get('http://localhost:4000/addCar')
+//     axios.get('https://car-rental-server-lyart.vercel.app/addCar')
 //       .then(res => {
 //         setData(res.data);
 //         setFilteredData(res.data);
@@ -46,7 +46,7 @@
 //       return;
 //     }
 
-//     axios.put(`http://localhost:4000/updateBooking/${bookingId}`, {
+//     axios.put(`https://car-rental-server-lyart.vercel.app/updateBooking/${bookingId}`, {
 //       carId: selectedCar._id,
 //       model: selectedCar.model,
 //       price: selectedCar.price,

@@ -6,7 +6,7 @@ const Deals = () => {
   const [deals, setDeals] = useState([]);
 
   useEffect(() => {
-    fetch('/public/Deals.json')
+    fetch('/Deals.json')
       .then(res => res.json())
       .then(data => setDeals(data))
       .catch(error => {

@@ -27,7 +27,7 @@ const AvailableCars = () => {
 
   // useEffect(() => {
   //   if (!data.length) {
-  //     axios.get(`http://localhost:4000/addCar?page=${currentPage}&size=${itemsPerPage}`)
+  //     axios.get(`https://car-rental-server-lyart.vercel.app/addCar?page=${currentPage}&size=${itemsPerPage}`)
   //       .then(res => {
   //         setFilteredData(res.data); // Initial load shows all cars
   //       })
@@ -37,7 +37,7 @@ const AvailableCars = () => {
   //   }
   // }, [data, currentPage]);
   useEffect(() => {
-    axios.get(`http://localhost:4000/addCar?page=${currentPage}&size=${itemsPerPage}`)
+    axios.get(`https://car-rental-server-lyart.vercel.app/addCar?page=${currentPage}&size=${itemsPerPage}`)
       .then(res => {
         setFilteredData(res.data); // Update car data
     

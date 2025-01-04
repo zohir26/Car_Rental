@@ -5,7 +5,7 @@ const RecentListings = () => {
   const [carsData, setCarsData] = useState([]);
 
   useEffect(() => {
-    fetch('/public/DemoCar.json')
+    fetch('/DemoCar.json')
       .then((response) => response.json())
       .then((data) => setCarsData(data))
       .catch((error) => console.log('Error fetching data:', error));
