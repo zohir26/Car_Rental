@@ -20,9 +20,9 @@ import { Link } from 'react-router-dom';
 
 const Banner = () => {
   return (
-    <div className='h-full flex justify-center items-center py-4 '
+    <div className='h-full flex justify-center items-center py-4 bg-base-200 text-base-content'
     >
-      <div className='absolute z-50 text-black text-center'>
+      <div className='absolute z-50 text-base-content text-center '>
         <TypeAnimation sequence={['"Drive Your Dreams Today!"', 1000, 'Experience the best rental cars at affordable prices', 2000,]}
           wrapper="span" speed={50} style={{ fontSize: '2em', display: 'inline-block' }} repeat={Infinity} /> <div className='mt-4'>
           <Link to='/availableCar'> <button className='mt-2 px-4 py-2  bg-blue-600 text-white rounded-md'>View Available Cars</button> </Link> </div> </div>
