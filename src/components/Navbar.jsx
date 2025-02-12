@@ -21,7 +21,8 @@ const Navbar = () => {
     <>
       {user && user.email ? (
         <>
-          <li><Link to="/">Home</Link></li>
+      <div className="flex justify-center items-center gap-4">
+      <li><Link to="/">Home</Link></li>
           <li><Link to="/availableCar">Available Car</Link></li>
           <li><Link to="/addCar">Add Car</Link></li>
           <li><Link to="/myCars">My Cars</Link></li>
@@ -39,7 +40,11 @@ const Navbar = () => {
                 className="w-8 h-8 rounded-full"
               />
             </li>
+
           )}
+      </div>
+      
+     
         </>
       ) : (
         <>
@@ -51,9 +56,9 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-[#2C3E50] text-white shadow-md">
+    <nav className="bg-[#2C3E50] text-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-        
+
         {/* Logo Section */}
         <div className="flex items-center gap-3">
           <img src={logo} alt="Car Rental Logo" className="h-10 w-auto" />

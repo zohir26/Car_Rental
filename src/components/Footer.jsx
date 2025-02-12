@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className='bg-base-200'>
+    <div className='bg-base-200 mx-auto w-full'>
       {/* Main Footer Section */}
-      <footer className="footer text-base-content p-10 flex flex-col md:flex-row flex-wrap justify-between gap-6 md:gap-12">
+      <footer className="footer text-base-content p-10 flex flex-col md:flex-row flex-wrap justify-between gap-6 md:gap-12 ">
         {/* Company Branding */}
         <aside className="flex flex-col items-center md:items-start text-center md:text-left">
           <img src={logo} alt="Company Logo" className="w-28 h-auto mb-2" />
