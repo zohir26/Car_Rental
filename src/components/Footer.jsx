@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo 2.png';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -18,28 +19,22 @@ const Footer = () => {
 
         {/* Services Section */}
         <nav className="flex-1 text-center md:text-left">
-          <h6 className="footer-title font-semibold">Services</h6>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+          <h6 className="footer-title font-semibold">Cars</h6>
+          <Link to='/availableCar' className="link link-hover">Available Car</Link>
+          <Link to='/addCar' className="link link-hover">Add Cars</Link>
+          <Link to='/myCars' className="link link-hover">My Cars</Link>
         </nav>
 
         {/* Company Section */}
         <nav className="flex-1 text-center md:text-left">
-          <h6 className="footer-title font-semibold">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <h6 className="footer-title font-semibold">Authentication</h6>
+         <Link to='/updateUser' className="link link-hover"> Update User </Link>
         </nav>
 
         {/* Legal Section */}
         <nav className="flex-1 text-center md:text-left">
-          <h6 className="footer-title font-semibold">Legal</h6>
-          <a className="link link-hover">Terms of use</a>
-          <a className="link link-hover">Privacy policy</a>
-          <a className="link link-hover">Cookie policy</a>
+          <h6 className="footer-title font-semibold">Car Upgrade</h6>
+          <Link to='/myBookings' className="link link-hover">My Bookings </Link>
         </nav>
       </footer>
 
