@@ -84,20 +84,20 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+      <div className="min-h-screen bg-base-200 flex flex-col justify-center sm:py-12">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform skew-y-0 rotate-6 rounded-3xl"></div>
-          <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <div className="relative px-4 py-10 bg-base-100 shadow-lg sm:rounded-3xl sm:p-20">
             <div className="max-w-md mx-auto">
-              <div className="text-center text-2xl font-semibold">Login</div>
+              <div className="text-center text-2xl font-semibold text-base-content">Login</div>
               <form className="mt-8" onSubmit={handleSignIn}>
                 <div className="mb-4">
-                  <input type="email" placeholder="Email" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='email' />
+                  <input type="email" placeholder="Email" className="input input-bordered w-full text-base-content" name='email' />
                 </div>
                 <div className="mb-4">
-                  <input type="password" placeholder="Password" className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" name='password' />
+                  <input type="password" placeholder="Password" className="input input-bordered w-full text-base-content" name='password' />
                 </div>
-                <button className="w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700">Login</button>
+                <button className="btn btn-primary w-full">Login</button>
                 <div className="mt-4 flex justify-between items-center gap-2">
                   <button onClick={handleGoogleSignIn} className="px-4 py-2 bg-red-500 text-white flex gap-2 justify-center items-center rounded-md hover:bg-red-600">
                     <IoLogoGoogle />Login with Google

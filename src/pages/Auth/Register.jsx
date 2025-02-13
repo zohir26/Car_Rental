@@ -92,13 +92,13 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+      <div className="min-h-screen bg-base-200 dark:bg-base-900 flex flex-col justify-center sm:py-12">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <div className="text-center text-2xl font-semibold mb-6">Register</div>
+          <div className="relative px-4 py-10 bg-base-100 dark:bg-base-800 shadow-lg sm:rounded-3xl sm:p-20">
+            <div className="text-center text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Register</div>
             <form onSubmit={handleSignUp}>
-              <input type="email" placeholder="Email" name="email" className="mb-4 w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
-              <input type="password" placeholder="Password" name="password" className="mb-4 w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" />
+              <input type="email" placeholder="Email" name="email" className="mb-4 w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-base-700 dark:text-gray-100 dark:border-gray-500" />
+              <input type="password" placeholder="Password" name="password" className="mb-4 w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-base-700 dark:text-gray-100 dark:border-gray-500" />
               <div className="flex gap-3 mb-4">
                 <button 
                   onClick={handleGoogleSignIn}
@@ -113,7 +113,7 @@ const Register = () => {
                 </button>
               </div>
               <div className="text-center">
-                <Link to="/login" className="text-blue-500 hover:underline">
+                <Link to="/login" className="text-blue-500 hover:underline dark:text-blue-400">
                   Already have an account? Login here
                 </Link>
               </div>

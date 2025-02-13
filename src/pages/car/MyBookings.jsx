@@ -26,7 +26,7 @@ const MyBookings = () => {
       fetchBookings();
       fetchCarData();
     }
-  }, [user?.email ]);
+  }, [user?.email]);
 
   const fetchBookings = () => {
     axiosSecure.get('/myBookings',{withCredentials: true})
@@ -53,18 +53,12 @@ const MyBookings = () => {
         axiosSecure
           .delete(`/myBookings/${_id}`, { withCredentials: true })
           .then((res) => {
-            console.log("Delete Response:", res.data); // Debug response data
-            if (res.data?.hasOwnProperty.length
-              > 0) {
-              // Update the state to reflect the changes immediately
+            if (res.data?.hasOwnProperty.length > 0) {
               setBooking((prevBookings) =>
                 prevBookings.filter((booking) => booking._id !== _id)
               );
   
-              // Show success alert
-              Swal.fire("Deleted!", "Your booking has been deleted.", "success").then(() => {
-                // Additional clean up or close modal if needed
-              });
+              Swal.fire("Deleted!", "Your booking has been deleted.", "success");
             } else {
               Swal.fire("Error!", "Failed to delete booking.", "error");
             }
@@ -76,10 +70,6 @@ const MyBookings = () => {
       }
     });
   };
-  
-  
-  
-  
 
   const handleUpdate = (car) => {
     setSelectedBooking(car);
@@ -89,7 +79,7 @@ const MyBookings = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 p-4 md:p-6">
+      <div className="min-h-screen bg-base-200 flex flex-col justify-center sm:py-12 text-base-content p-4 md:p-6">
         <h1 className="text-3xl font-extrabold text-center mb-6">My Bookings</h1>
 
         {isUpdating ? (
@@ -101,8 +91,8 @@ const MyBookings = () => {
         ) : (
           <>
             {booking.length === 0 ? (
-              <div className="text-center py-10">
-                <h2 className="text-xl font-semibold text-gray-700">No bookings found!</h2>
+              <div className="text-center py-10 bg-base-200 text-base-content">
+                <h2 className="text-xl font-semibold">No bookings found!</h2>
                 <Link to="/availableCar">
                   <button className="mt-4 btn btn-success px-4 py-2 rounded-md">
                     Book Your First Car
@@ -111,29 +101,29 @@ const MyBookings = () => {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full bg-white shadow-md rounded-lg text-sm md:text-base">
-                  <thead className="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                <table className="w-full bg-base-200 shadow-md rounded-lg text-sm md:text-base">
+                  <thead className="bg-base-200 text-base-content uppercase text-sm leading-normal">
                     <tr>
-                      <th className="py-3 px-2 md:px-6 text-left">Car Image</th>
-                      <th className="py-3 px-2 md:px-6 text-left">Model</th>
-                      <th className="py-3 px-2 md:px-6 text-left">Price</th>
-                      <th className="py-3 px-2 md:px-6 text-left">Date Added</th>
-                      <th className="py-3 px-2 md:px-6 text-center">Actions</th>
+                      <th className="py-3 px-2 md:px-6 text-left text-base-content">Car Image</th>
+                      <th className="py-3 px-2 md:px-6 text-left text-base-content">Model</th>
+                      <th className="py-3 px-2 md:px-6 text-left text-base-content">Price</th>
+                      <th className="py-3 px-2 md:px-6 text-left text-base-content">Date Added</th>
+                      <th className="py-3 px-2 md:px-6 text-center text-base-content">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-600 text-sm md:text-base">
+                  <tbody>
                     {booking.map((car) => (
                       <tr key={car._id} className="border-b border-gray-200 hover:bg-gray-100">
-                        <td className="py-3 px-2 md:px-6 text-left">
+                        <td className="py-3 px-2 md:px-6 text-left text-base-content">
                           <img 
                             src={car.imageUrl} 
                             alt={car.model} 
                             className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-md" 
                           />
                         </td>
-                        <td className="py-3 px-2 md:px-6 text-left">{car.model}</td>
-                        <td className="py-3 px-2 md:px-6 text-left">${car.price}</td>
-                        <td className="py-3 px-2 md:px-6 text-left">
+                        <td className="py-3 px-2 md:px-6 text-left text-base-content">{car.model}</td>
+                        <td className="py-3 px-2 md:px-6 text-left text-base-content">${car.price}</td>
+                        <td className="py-3 px-2 md:px-6 text-left text-base-content">
                           {new Date(car.dateAdded).toLocaleDateString()}
                         </td>
                         <td className="py-3 px-2 md:px-6 text-center flex justify-center gap-2 md:gap-3">
@@ -157,10 +147,9 @@ const MyBookings = () => {
               </div>
             )}
 
-            {/* Chart Section */}
             <div className="my-8">
-              <h2 className="text-2xl font-semibold text-center mb-6">Car Rental Prices</h2>
-              <div className="w-full h-64 md:h-96">
+              <h2 className="text-2xl font-semibold text-center mb-6 text-base-content">Car Rental Prices</h2>
+              <div className="w-full h-64 md:h-96 text-base-content">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={carData}>
                     <CartesianGrid strokeDasharray="3 3" />
