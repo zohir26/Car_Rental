@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import Lottie from 'lottie-react';
-import animationData from '../lottie/errorAnimation.json'; // Make sure to import your Lottie animation JSON file
+import animationData from '../lottie/errorAnimation.json'; 
 
 const ErrorPage = () => {
     return (

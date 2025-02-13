@@ -38,7 +38,7 @@ const ViewDetails = () => {
     const bookingData = {
       ...data,
       userEmail: user.email,
-      carId: data._id, // Ensure you're sending the car ID
+      carId: data._id, 
       dateAdded: new Date().toISOString()
     };
 
