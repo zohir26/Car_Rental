@@ -1,35 +1,37 @@
 import { Link } from "react-router-dom";
 import logo from '../assets/logo 2.png';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { auth, AuthContext } from "../Provider/AuthProvider";
 
-const Navbar = ({theme,setTheme}) => {
+const Navbar = ({ theme, setTheme }) => {
+  // Get user and signOut function from AuthContext
   const { user, signOutUser } = useContext(AuthContext);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to toggle mobile menu
-//  const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : "light");
 
-//  useEffect(() => {
-//   localStorage.setItem("theme", theme);
-//   document.documentElement.setAttribute("data-theme", theme); // Apply to <html>
-// }, [theme]);
+  // State to control visibility of the mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Function to handle user sign out
   const handleSignOut = () => {
     signOutUser(auth)
-      .then(() => { })
+      .then(() => { /* Successfully signed out */ })
       .catch((error) => { console.log(error) });
   };
 
+  // Function to toggle the mobile menu open/close
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Function to toggle between light and dark theme
   const handleToggle = (e) => {
     if (e.target.checked) {
-      setTheme('dark'); // Update theme state in HomeLayout
+      setTheme('dark');
     } else {
       setTheme('light');
     }
-  }
+  };
 
+  // Reusable list of nav links depending on user's auth state
   const list = (
     <>
       {user && user.email ? (
@@ -41,9 +43,7 @@ const Navbar = ({theme,setTheme}) => {
             <li><Link to="/myCars">My Cars</Link></li>
             <li><Link to="/myBookings">My Bookings</Link></li>
             <li><Link to="/updateUser">Update User</Link></li>
-            <li className="text-green-500 ">
-              {user.email}
-            </li>
+            <li className="text-green-500 ">{user.email}</li>
             {user.photoURL && (
               <li className="flex items-center gap-2">
                 <p>{user.displayName}</p>
@@ -53,11 +53,8 @@ const Navbar = ({theme,setTheme}) => {
                   className="w-8 h-8 rounded-full"
                 />
               </li>
-
             )}
           </div>
-
-
         </>
       ) : (
         <>
@@ -72,42 +69,43 @@ const Navbar = ({theme,setTheme}) => {
     <nav className="bg-[#2C3E50] text-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
-        {/* Logo Section */}
+        {/* Logo and Theme Toggle Section */}
         <div className="flex items-center gap-3">
           <img src={logo} alt="Car Rental Logo" className="h-10 w-auto" />
           <Link to='/' className="text-xl font-bold">Car Rental</Link>
+
+          {/* Theme toggle (light/dark mode) */}
           <label className="swap swap-rotate ml-4 flex justify-center items-center">
-            {/* this hidden checkbox controls the state */}
-            <input type="checkbox" onChange={handleToggle} 
-            checked={theme==='light' ? false : true}
+            <input
+              type="checkbox"
+              onChange={handleToggle}
+              checked={theme === 'light' ? false : true}
             />
 
-            {/* sun icon */}
+            {/* Sun icon (for light mode) */}
             <svg
               className="swap-on h-10 w-10 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24">
-              <path
-                d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+              <path d="..." />
             </svg>
 
-            {/* moon icon */}
+            {/* Moon icon (for dark mode) */}
             <svg
               className="swap-off h-10 w-10 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24">
-              <path
-                d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+              <path d="..." />
             </svg>
           </label>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Navigation Links */}
         <ul className="hidden lg:flex gap-6 font-bold">
           {list}
         </ul>
 
-        {/* Sign In/Out Button */}
+        {/* Sign In/Out Button for Desktop */}
         <div className="hidden lg:block">
           {user && user.email ? (
             <button onClick={handleSignOut} className="btn btn-primary text-white">Sign Out</button>
@@ -116,7 +114,7 @@ const Navbar = ({theme,setTheme}) => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle Button */}
         <div className="lg:hidden">
           <button onClick={toggleMenu} className="text-white focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,7 +124,7 @@ const Navbar = ({theme,setTheme}) => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-[#2C3E50] text-white">
           <ul className="flex flex-col gap-4 p-4">
@@ -139,7 +137,6 @@ const Navbar = ({theme,setTheme}) => {
           </ul>
         </div>
       )}
-
     </nav>
   );
 };
