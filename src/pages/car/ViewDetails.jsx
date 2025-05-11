@@ -1,3 +1,4 @@
+// Import required modules and components
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -8,22 +9,33 @@ import Swal from 'sweetalert2';
 import Loading from '../../components/Loading';
 
 const ViewDetails = () => {
-  const { id } = useParams(); // Get the car ID from the URL parameters
+  // Extract the 'id' parameter from the route
+  const { id } = useParams();
+
+  // State to store car details fetched from the server
   const [data, setData] = useState(null);
+
+  // Access the logged-in user's context
   const { user } = useContext(AuthContext);
+
+  // Hook for navigating programmatically
   const navigate = useNavigate();
 
+  // Fetch car details based on ID from the backend
   useEffect(() => {
     axios.get(`https://car-rental-server-lyart.vercel.app/viewDetails/${id}`)
-      .then(res => setData(res.data))
-      .catch(error => console.log(error));
+      .then(res => setData(res.data)) // Set fetched data to state
+      .catch(error => console.log(error)); // Handle errors
   }, [id]);
 
+  // Show loading component while data is being fetched
   if (!data) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
+  // Handle booking action when user clicks "Book Now"
   const handleBookings = () => {
+    // If user is not logged in, show warning and redirect to login
     if (!user?.email) {
       Swal.fire({
         title: 'Not Logged In',
@@ -35,16 +47,18 @@ const ViewDetails = () => {
       return;
     }
 
+    // Prepare booking data to be sent to the server
     const bookingData = {
       ...data,
       userEmail: user.email,
-      carId: data._id, 
+      carId: data._id,
       dateAdded: new Date().toISOString()
     };
 
+    // Send POST request to create a booking
     axios.post('https://car-rental-server-lyart.vercel.app/myBookings', bookingData)
       .then(res => {
-        console.log(res.data);
+        // If booking is successful, show success message and navigate to bookings page
         if (res.data.bookingId) {
           Swal.fire({
             title: 'Success!',
@@ -56,6 +70,7 @@ const ViewDetails = () => {
         }
       })
       .catch(error => {
+        // Show error message if booking fails
         console.error('Booking Error:', error);
         Swal.fire({
           title: 'Error!',
@@ -68,10 +83,16 @@ const ViewDetails = () => {
 
   return (
     <>
+      {/* Navbar at the top */}
       <Navbar />
+
+      {/* Car details section */}
       <div className="min-h-screen bg-base-200 flex flex-col justify-center sm:py-12">
         <div className="max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden">
+          {/* Car image */}
           <img src={data.imageUrl} alt={data.model} className="w-full h-64 object-cover" />
+
+          {/* Car info and booking button */}
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4 text-base-content">{data.model}</h2>
             <p className="text-base-content mb-2"><strong>Price:</strong> ${data.price} per day</p>
@@ -82,6 +103,7 @@ const ViewDetails = () => {
             <p className="text-base-content mb-2"><strong>Location:</strong> {data.location}</p>
             <p className="text-base-content mb-2"><strong>Booking Count:</strong> {data.bookingCount}</p>
 
+            {/* Book Now button - triggers booking process */}
             <Link to='/myBookings'>
               <button
                 onClick={handleBookings}
@@ -93,6 +115,7 @@ const ViewDetails = () => {
         </div>
       </div>
 
+      {/* Footer at the bottom */}
       <Footer />
     </>
   );
